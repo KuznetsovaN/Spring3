@@ -1,4 +1,4 @@
-package ru.appline.lodic;
+package ru.appline.logic;
 
 
 public class Pet {
