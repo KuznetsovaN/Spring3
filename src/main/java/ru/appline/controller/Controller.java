@@ -1,8 +1,12 @@
 package ru.appline.controller;
+import java.util.Map;
+import java.util.Set;
 
+import com.google.gson.Gson;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.appline.logic.Pet;
-import ru.appline.logic.PetModel;
+import ru.appline.logic.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,24 +67,69 @@ public class Controller {
     }
 
     //Вторая часть задания
-    private Map<String, String> ranges = new HashMap<>();
+    //  private Map<String, String> ranges = new HashMap<>();
 
-    @PostMapping("/ranges")
-    public void setRanges(@RequestBody Map<String, String> ranges) {
-        this.ranges = ranges;
-    }
-
-    @GetMapping("/side")
-    public String getSide(@RequestParam int degree) {
-        for (Map.Entry<String, String> entry : ranges.entrySet()) {
-            String[] range = entry.getValue().split("-");
-            int start = Integer.parseInt(range[0]);
-            int end = Integer.parseInt(range[1]);
-            if (degree >= start && degree <= end) {
-                return entry.getKey();
-            }
-        }
-        return "Unknown";
-    }
-
-}
+//    @PostMapping("/ranges")
+//    public void setRanges(@RequestBody Map<String, String> ranges) {
+//        this.ranges = ranges;
+//    }
+//
+//
+//    @RestController
+//    public class SideController {
+//
+//        @GetMapping("/side")
+//        public SideResponse getSide(@RequestBody DegreeRequest request) {
+//            int degree = request.getDegree();
+//
+//            for (Map.Entry<String, String> entry : ranges.entrySet()) {
+//                String[] range = entry.getValue().split("-");
+//                int start = Integer.parseInt(range[0]);
+//                int end = Integer.parseInt(range[1]);
+//
+//                if (degree >= start && degree <= end) {
+//                    return new SideResponse(entry.getKey());
+//                }
+//            }
+//
+//            return new SideResponse("Unknown");
+//        }
+//    }
+//@RestController
+//public class CompassController {
+//
+//    private Map<String, String> ranges;
+//
+//    @PostMapping("/ranges")
+//    public void setRanges(@RequestBody Map<String, String> ranges) {
+//        this.ranges = ranges;
+//    }
+//
+//    @GetMapping(value = "/side", produces = "application/json")
+//    @ResponseBody
+//    public SideResponse getSide(@RequestBody String json){
+//        Gson gson = new Gson();
+//        DegreeRequest request = gson.fromJson(json, DegreeRequest.class);
+//
+//        if (ranges.isEmpty()) {
+//            // обработка случая, когда ranges пустой или не инициализирован
+//            return new SideResponse("Unknown");
+//        }
+//
+//        int degree = request.getDegree();
+//
+//        for (Map.Entry<String, String> entry : ranges.entrySet()) {
+//            String[] range = entry.getValue().split("-");
+//            int start = Integer.parseInt(range[0]);
+//            int end = Integer.parseInt(range[1]);
+//
+//            if (degree >= start && degree <= end) {
+//                return new SideResponse(entry.getKey());
+//            }
+//        }
+//
+//                return new SideResponse("Unknown");
+//            }
+//
+//        }
+   }
