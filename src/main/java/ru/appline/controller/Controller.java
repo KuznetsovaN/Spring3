@@ -188,7 +188,7 @@ public class Controller {
         public void setRanges(@RequestBody Map<String, String> ranges) {
             this.ranges = ranges;
         }
-//
+
 //        @GetMapping(value = "/side", consumes = "application/json", produces = "application/json")
 //        @ResponseBody
 //        public SideResponse getSide(@RequestBody String json) {
@@ -220,38 +220,38 @@ public class Controller {
 //
 //            return new SideResponse("Unknown");
 //        }
-//
-//    }
 
-    @GetMapping(value = "/side", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public SideResponse getSide(@RequestBody String json) {
-        Gson gson = new Gson();
-        DegreeRequest request = gson.fromJson(json, DegreeRequest.class);
+        @GetMapping(value = "/side", consumes = "application/json", produces = "application/json")
+        @ResponseBody
+        public SideResponse getSide(@RequestBody String json) {
+            Gson gson = new Gson();
+            DegreeRequest request = gson.fromJson(json, DegreeRequest.class);
 
-        if (ranges.isEmpty()) {
-            // обработка случая, когда ranges пустой или не инициализирован
+            if (ranges.isEmpty()) {
+                // обработка случая, когда ranges пустой или не инициализирован
+                return new SideResponse("Unknown");
+            }
+
+            int degree = request.getDegree() % 360;
+
+            for (Map.Entry<String, String> entry : ranges.entrySet()) {
+                String[] range = entry.getValue().split("-");
+                int start = Integer.parseInt(range[0]);
+                int end = Integer.parseInt(range[1]);
+
+                if (end > start) {
+                    if (start <= degree && degree <= end) {
+                        return new SideResponse(entry.getKey());
+                    }
+                } else { // переход промежутка через 0
+                    if((start <= degree && degree <= end + 360) || (start - 360 <= degree && degree <= end)) {
+                        return new SideResponse(entry.getKey());
+                    }
+                }
+            }
+
             return new SideResponse("Unknown");
         }
 
-        int degree = request.getDegree() % 360;
-
-        for (Map.Entry<String, String> entry : ranges.entrySet()) {
-            String[] range = entry.getValue().split("-");
-            int start = Integer.parseInt(range[0]);
-            int end = Integer.parseInt(range[1]);
-
-            if (end >= start) {
-                if (start <= degree && degree <= end) {
-                    return new SideResponse(entry.getKey());
-                }
-            } else { // переход промежутка через 0
-                if((start <= degree && degree <= 360) || (0 <= degree && degree <= end)) {
-                    return new SideResponse(entry.getKey());
-                }
-            }
-        }
-
-        return new SideResponse("Unknown");
     }
 }

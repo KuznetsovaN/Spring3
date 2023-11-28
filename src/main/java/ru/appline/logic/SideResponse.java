@@ -3,7 +3,7 @@ package ru.appline.logic;
 public class SideResponse {
     private String side;
 
-    public SideResponse(String side) {
+    public void setSide(String side) {
         this.side = side;
     }
 
@@ -11,7 +11,9 @@ public class SideResponse {
         return side;
     }
 
-    public void setSide(String side) {
+    public SideResponse(String side) {
         this.side = side;
     }
+
+
 }
